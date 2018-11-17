@@ -30,21 +30,21 @@ class Configurator implements \ArrayAccess
     {
         if (is_array($resource)) {
             $this->config = $resource;
-        }
+        } else {
+            if (gettype($resource) != 'string') {
+                throw new \LogicException(
+                    'Unexpected type ' . gettype($resource) . ', expected string'
+                );
+            }
 
-        if (gettype($resource) != 'string') {
-            throw new \LogicException(
-                'Unexpected type ' . gettype($resource) . ', expected string'
-            );
-        }
+            if (!file_exists($resource)) {
+                throw new \LogicException(
+                    "File " . var_export($resource, true) . " not exist"
+                );
+            }
 
-        if (!file_exists($resource)) {
-            throw new \LogicException(
-                "File " . var_export($resource, true) . " not exist"
-            );
+            $this->config = include($resource);
         }
-
-        $this->config = include($resource);
     }
 
     /**

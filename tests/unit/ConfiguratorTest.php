@@ -34,7 +34,7 @@ class ConfiguratorTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $this->config_from_file = __DIR__ . "/resources/conf/config.php";
+        $this->config_from_file = __DIR__ . "/../resources/conf/config.php";
     }
 
     public function testInitConfigFromArray()

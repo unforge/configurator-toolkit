@@ -26,9 +26,9 @@
     }
   },
   "autoload-dev": {
-    "classmap": ["tests/resources/lib/"],
+    "classmap": ["tests/"],
     "psr-4": {
-      "Unforge\\Tests\\ConfiguratorToolkit\\": "tests/resources/lib/"
+      "Unforge\\Tests\\ConfiguratorToolkit\\": "tests/"
     }
   }
 }

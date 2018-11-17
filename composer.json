@@ -20,8 +20,15 @@
     "satooshi/php-coveralls": "0.6.*"
   },
   "autoload": {
+    "classmap": ["src/"],
     "psr-4": {
       "Unforge\\ConfiguratorToolkit\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "classmap": ["tests/resources/lib/"],
+    "psr-4": {
+      "Unforge\\Tests\\ConfiguratorToolkit\\": "tests/resources/lib/"
     }
   }
 }

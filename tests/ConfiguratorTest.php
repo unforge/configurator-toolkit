@@ -28,9 +28,13 @@ class ArrayColumnTest extends \PHPUnit_Framework_TestCase
                     'tro' => 'free'
                 ],
             ],
+            'temp_exist_object' => [
+                'one' => 1,
+                'two' => 'free'
+            ]
         ];
 
-        $this->config_from_file = __DIR__ . "/config.php";
+        $this->config_from_file = __DIR__ . "/resources/conf/config.php";
     }
 
     public function testInitConfigFromArray()
@@ -83,5 +87,28 @@ class ArrayColumnTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->assertEquals($expected, $actual->param_3);
+    }
+
+    public function testGetExistConfigByObject()
+    {
+        $configurator = new Configurator($this->config_from_array);
+        $object = new \Unforge\Tests\ConfiguratorToolkit\TempExistObject($configurator);
+        $actual = $object->getConfig();
+        $expected = [
+            'one' => 1,
+            'two' => 'free'
+        ];
+
+        $this->assertEquals($expected, $actual->getArrayCopy());
+    }
+
+    public function testGetNotExistConfigByObject()
+    {
+        $configurator = new Configurator($this->config_from_array);
+        $object = new \Unforge\Tests\ConfiguratorToolkit\TempNotExistObject($configurator);
+        $actual = $object->getConfig();
+        $expected = [];
+
+        $this->assertEquals($expected, $actual);
     }
 }

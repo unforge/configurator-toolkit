@@ -99,7 +99,8 @@ class Configurator implements \ArrayAccess
      */
     private function getOffsetNameByClassName(string $name): string
     {
-        return strtolower(preg_replace('/[A-Z]/', '_\0', lcfirst($name)));
+        $name = explode("\\", $name);
+        return strtolower(preg_replace('/[A-Z]/', '_\0', lcfirst(array_pop($name))));
     }
 
     /**

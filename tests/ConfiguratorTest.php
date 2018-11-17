@@ -3,10 +3,10 @@
 namespace Unforge\ConfiguratorToolkit;
 
 /**
- * Class ArrayColumnTest
+ * Class ConfiguratorTest
  * @package Unforge\ConfiguratorToolkit
  */
-class ArrayColumnTest extends \PHPUnit_Framework_TestCase
+class ConfiguratorTest extends \PHPUnit_Framework_TestCase
 {
     private $config_from_array = [];
 

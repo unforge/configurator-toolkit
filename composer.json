@@ -22,13 +22,13 @@
   "autoload": {
     "classmap": ["src/"],
     "psr-4": {
-      "Unforge\\ConfiguratorToolkit\\": "src/"
+      "Unforge\\Toolkit\\": "src/"
     }
   },
   "autoload-dev": {
     "classmap": ["tests/"],
     "psr-4": {
-      "Unforge\\Tests\\ConfiguratorToolkit\\": "tests/"
+      "Unforge\\ToolkitTests\\": "tests/"
     }
   }
 }

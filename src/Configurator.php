@@ -9,13 +9,13 @@
  * @license http://opensource.org/licenses/MIT MIT
  */
 
-namespace Unforge\ConfiguratorToolkit;
+namespace Unforge\Toolkit;
 
 use \ReflectionClass;
 
 /**
  * Class Configurator
- * @package Unforge\ConfiguratorToolkit
+ * @package Unforge\Toolkit
  */
 class Configurator implements \ArrayAccess
 {

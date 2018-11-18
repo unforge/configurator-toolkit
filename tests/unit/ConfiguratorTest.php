@@ -1,10 +1,12 @@
 <?php
 
-namespace Unforge\ConfiguratorToolkit;
+namespace Unforge\Toolkit;
+
+use Unforge\ToolkitTests;
 
 /**
  * Class ConfiguratorTest
- * @package Unforge\ConfiguratorToolkit
+ * @package Unforge\Toolkit
  */
 class ConfiguratorTest extends \PHPUnit_Framework_TestCase
 {
@@ -92,7 +94,7 @@ class ConfiguratorTest extends \PHPUnit_Framework_TestCase
     public function testGetExistConfigByObject()
     {
         $configurator = new Configurator($this->config_from_array);
-        $object = new \Unforge\Tests\ConfiguratorToolkit\TempExistObject($configurator);
+        $object = new ToolkitTests\TempExistObject($configurator);
         $actual = $object->getConfig();
         $expected = [
             'one' => 1,
@@ -105,7 +107,7 @@ class ConfiguratorTest extends \PHPUnit_Framework_TestCase
     public function testGetNotExistConfigByObject()
     {
         $configurator = new Configurator($this->config_from_array);
-        $object = new \Unforge\Tests\ConfiguratorToolkit\TempNotExistObject($configurator);
+        $object = new ToolkitTests\TempNotExistObject($configurator);
         $actual = $object->getConfig();
         $expected = [];
 

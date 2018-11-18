@@ -1,12 +1,12 @@
 <?php
 
-namespace Unforge\Tests\ConfiguratorToolkit;
+namespace Unforge\ToolkitTests;
 
-use \Unforge\ConfiguratorToolkit\Configurator;
+use \Unforge\Toolkit\Configurator;
 
 /**
  * Class TempExistObject
- * @package Unforge\Tests\ConfiguratorToolkit
+ * @package Unforge\ToolkitTests
  */
 class TempExistObject
 {

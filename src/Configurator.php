@@ -117,7 +117,7 @@ class Configurator implements \ArrayAccess
      */
     public function offsetExists($offset)
     {
-        return isset($this->$offset) || isset($this->_main[$offset]);
+        return isset($this->$offset) || isset($this->config[$offset]);
     }
 
     /**
@@ -150,7 +150,7 @@ class Configurator implements \ArrayAccess
     {
         if (isset($this->$offset)) {
             if (is_array($value)) {
-                $this->$offset = $value + $this->$offset;
+                $this->$offset = $value + $this->$offset->getArrayCopy();
             } else {
                 throw new \LogicException('Unexpected type ' . gettype($value) . ', expected array');
             }

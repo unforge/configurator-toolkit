@@ -1,4 +1,13 @@
 <?php
+/**
+ * This file is part of the Configurator library
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @copyright Copyright (c) Ronam Unstirred (unforge.coder@gmail.com)
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 
 namespace Unforge\Toolkit;
 
@@ -119,6 +128,88 @@ class ConfiguratorTest extends \PHPUnit_Framework_TestCase
         $actual = $object->getConfig();
         $expected = [];
 
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testOffsetExists()
+    {
+        $configurator = new Configurator($this->config_from_array);
+
+        $actual = $configurator->offsetExists('db');
+        $this->assertTrue($actual);
+
+        $actual = $configurator->offsetExists('db-dev');
+        $this->assertFalse($actual);
+    }
+
+    public function testOffsetGet()
+    {
+        $configurator = new Configurator($this->config_from_array);
+
+        $actual = $configurator->offsetGet('redis');
+        $expected = '127.0.0.1';
+        $this->assertStringEndsWith($expected, $actual->host);
+
+        $actual = $configurator->offsetGet('db-dev');
+        $expected = [];
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testOffsetSet()
+    {
+        $configurator = new Configurator($this->config_from_array);
+
+        $configurator->get('db');
+        $configurator->offsetSet('db', ['sql_mode' => 'ALLOW_INVALID_DATES']);
+        $actual = $configurator->get('db');
+        $expected = [
+            'sql_mode' => 'ALLOW_INVALID_DATES',
+            'host' => '127.0.0.1',
+            'port' => 3306,
+            'user' => 'root',
+            'password' => 'free',
+            'database' => 'test',
+        ];
+        $this->assertEquals($expected, $actual);
+
+        $configurator->offsetSet('db-dev', ['sql_mode' => 'ALLOW_INVALID_DATES']);
+        $actual = $configurator->offsetGet('db-dev');
+        $actual = json_decode(json_encode($actual), true);
+        $expected = [
+            'sql_mode' => 'ALLOW_INVALID_DATES'
+        ];
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testOffsetUnset()
+    {
+        $configurator = new Configurator($this->config_from_array);
+
+        $actual = $configurator->get('redis');
+        $actual = json_decode(json_encode($actual), true);
+        $expected = [
+            'host' => '127.0.0.1',
+            'port' => 6379,
+        ];
+        $this->assertEquals($expected, $actual);
+
+        $configurator->offsetSet('redis', ['ttl' => 10]);
+        $actual = $configurator->get('redis');
+        $actual = json_decode(json_encode($actual), true);
+        $expected = [
+            'ttl' => 10,
+            'host' => '127.0.0.1',
+            'port' => 6379,
+        ];
+        $this->assertEquals($expected, $actual);
+
+        $configurator->offsetUnset('redis');
+        $actual = $configurator->get('redis');
+        $actual = json_decode(json_encode($actual), true);
+        $expected = [
+            'host' => '127.0.0.1',
+            'port' => 6379,
+        ];
         $this->assertEquals($expected, $actual);
     }
 }

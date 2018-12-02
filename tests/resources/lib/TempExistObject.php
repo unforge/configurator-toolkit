@@ -1,6 +1,6 @@
 <?php
 
-namespace Unforge\ToolkitTests;
+namespace Unforge\ToolkitTests\ConfiguratorTests;
 
 use \Unforge\Toolkit\Configurator;
 

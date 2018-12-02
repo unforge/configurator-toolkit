@@ -2,7 +2,7 @@
 
 namespace Unforge\Toolkit;
 
-use Unforge\ToolkitTests;
+use Unforge\ToolkitTests\ConfiguratorTests;
 
 /**
  * Class ConfiguratorTest
@@ -17,17 +17,22 @@ class ConfiguratorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->config_from_array = [
-            'locate1' => [
-                'param1' => 'one',
-                'param2' => 'two',
-                'param3' => 'free',
+            'db' => [
+                'host'      => '127.0.0.1',
+                'port'      => 3306,
+                'user'      => 'root',
+                'password'  => 'free',
+                'database'  => 'test',
             ],
-            'locate2' => [
-                'param_1' => 1,
-                'param_2' => 2,
-                'param_3' => [
-                    'one' => 1,
-                    'tro' => 'free'
+            'redis' => [
+                'host' => '127.0.0.1',
+                'port' => 6379,
+            ],
+            'elastic_search' => [
+                'hosts' => [
+                    '127.0.0.1:9200',
+                    '127.0.0.2:9200',
+                    '127.0.0.3:9200',
                 ],
             ],
             'temp_exist_object' => [
@@ -42,29 +47,31 @@ class ConfiguratorTest extends \PHPUnit_Framework_TestCase
     public function testInitConfigFromArray()
     {
         $configurator = new Configurator($this->config_from_array);
-        $actual = $configurator->get('locate1');
-        $expected = 'one';
+        $actual = $configurator->get('db');
+        $expected = '127.0.0.1';
 
-        $this->assertEquals($expected, $actual->param1);
+        $this->assertEquals($expected, $actual->host);
     }
 
     public function testInitConfigFromFile()
     {
         $configurator = new Configurator($this->config_from_file);
-        $actual = $configurator->get('locate1');
-        $expected = 'two';
+        $actual = $configurator->get('db');
+        $expected = 'test';
 
-        $this->assertEquals($expected, $actual->param2);
+        $this->assertEquals($expected, $actual->database);
     }
 
     public function testGetLocateFromConfig()
     {
         $configurator = new Configurator($this->config_from_array);
-        $actual = $configurator->get('locate1');
+        $actual = $configurator->get('db');
         $expected = [
-            'param1' => 'one',
-            'param2' => 'two',
-            'param3' => 'free',
+            'host'      => '127.0.0.1',
+            'port'      => 3306,
+            'user'      => 'root',
+            'password'  => 'free',
+            'database'  => 'test',
         ];
 
         $this->assertEquals($expected, $actual->getArrayCopy());
@@ -73,28 +80,29 @@ class ConfiguratorTest extends \PHPUnit_Framework_TestCase
     public function testGenScalarNestedParamFromConfig()
     {
         $configurator = new Configurator($this->config_from_array);
-        $actual = $configurator->get('locate2');
-        $expected = 2;
+        $actual = $configurator->get('redis');
+        $expected = 6379;
 
-        $this->assertEquals($expected, $actual->param_2);
+        $this->assertEquals($expected, $actual->port);
     }
 
     public function testGetArrayNestedParamFromConfig()
     {
         $configurator = new Configurator($this->config_from_array);
-        $actual = $configurator->get('locate2');
+        $actual = $configurator->get('elastic_search');
         $expected = [
-            'one' => 1,
-            'tro' => 'free'
+            '127.0.0.1:9200',
+            '127.0.0.2:9200',
+            '127.0.0.3:9200',
         ];
 
-        $this->assertEquals($expected, $actual->param_3);
+        $this->assertEquals($expected, $actual->hosts);
     }
 
     public function testGetExistConfigByObject()
     {
         $configurator = new Configurator($this->config_from_array);
-        $object = new ToolkitTests\TempExistObject($configurator);
+        $object = new ConfiguratorTests\TempExistObject($configurator);
         $actual = $object->getConfig();
         $expected = [
             'one' => 1,
@@ -107,7 +115,7 @@ class ConfiguratorTest extends \PHPUnit_Framework_TestCase
     public function testGetNotExistConfigByObject()
     {
         $configurator = new Configurator($this->config_from_array);
-        $object = new ToolkitTests\TempNotExistObject($configurator);
+        $object = new ConfiguratorTests\TempNotExistObject($configurator);
         $actual = $object->getConfig();
         $expected = [];
 

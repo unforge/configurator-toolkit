@@ -1,17 +1,22 @@
 <?php
 
 return [
-    'locate1' => [
-        'param1' => 'one',
-        'param2' => 'two',
-        'param3' => 'free',
+    'db' => [
+        'host'      => '127.0.0.1',
+        'port'      => 3306,
+        'user'      => 'root',
+        'password'  => 'free',
+        'database'  => 'test',
     ],
-    'locate2' => [
-        'param_1' => 1,
-        'param_2' => 2,
-        'param_3' => [
-            'one'   => 1,
-            'tro'   => 'free'
+    'redis' => [
+        'host' => '127.0.0.1',
+        'port' => 6379,
+    ],
+    'elastic_search' => [
+        'hosts' => [
+            '127.0.0.1:9200',
+            '127.0.0.2:9200',
+            '127.0.0.3:9200',
         ],
     ],
 ];

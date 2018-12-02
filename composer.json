@@ -28,7 +28,7 @@
   "autoload-dev": {
     "classmap": ["tests/"],
     "psr-4": {
-      "Unforge\\ToolkitTests\\": "tests/"
+      "Unforge\\ToolkitTests\\ConfiguratorTests\\": "tests/"
     }
   }
 }
